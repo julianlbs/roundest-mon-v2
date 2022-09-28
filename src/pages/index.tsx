@@ -1,7 +1,3 @@
-import type { NextPage } from "next";
-
-const Home: NextPage = () => {
+export default function Home() {
 	return <div className="text-red-400 text-2xl">HELLO WORLD!</div>;
-};
-
-export default Home;
+}
