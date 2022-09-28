@@ -6,6 +6,8 @@ export default function Home() {
 	const [ids, setIds] = useState(getOptionsForVote());
 	const [first, second] = ids;
 
+	const firstPokemon = trpc.getPokemonById.useQuery({ id: first });
+	console.log(firstPokemon.data);
 	return (
 		<div className="h-screen w-screen flex flex-col justify-center items-center">
 			<div className="text-2xl">Whick Pokémon is rounder?</div>

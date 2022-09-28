@@ -1,21 +1,21 @@
 import { initTRPC } from '@trpc/server';
+import { PokemonClient } from 'pokenode-ts';
 import { z } from 'zod';
 
 export const t = initTRPC.create();
 
 export const appRouter = t.router({
-  hello: t.procedure
+  getPokemonById: t.procedure
     .input(
       z
         .object({
-          text: z.string().nullish(),
-        })
-        .nullish(),
+          id: z.number()
+        }),
     )
-    .query(({ input }) => {
-      return {
-        greeting: `hello ${input?.text ?? 'world'}`,
-      };
+    .query(async ({ input }) => {
+      const api = new PokemonClient();
+      const pokemon = await api.getPokemonById(input.id);
+      return pokemon;
     }),
 });
 
