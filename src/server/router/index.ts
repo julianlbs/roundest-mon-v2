@@ -15,7 +15,7 @@ export const appRouter = t.router({
     .query(async ({ input }) => {
       const api = new PokemonClient();
       const pokemon = await api.getPokemonById(input.id);
-      return pokemon;
+      return { name: pokemon.name, sprites: pokemon.sprites };
     }),
 });
 
