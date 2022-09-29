@@ -14,6 +14,17 @@ model Vote {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   createdAt DateTime @default(now())
 
-  votedFor     Int
-  votedAgainst Int
+  votedFor       Pokemon @relation(name: "votesFor", fields: [votedForId], references: [id])
+  votedForId     String  @db.ObjectId
+  votedAgainst   Pokemon @relation(name: "votesAgainst", fields: [votedAgainstId], references: [id])
+  votedAgainstId String  @db.ObjectId
+}
+
+model Pokemon {
+  id String @id @map("_id") @db.ObjectId
+
+  name         String
+  spriteUrl    String
+  votesFor     Vote[] @relation("votesFor")
+  votesAgainst Vote[] @relation("votesAgainst")
 }
