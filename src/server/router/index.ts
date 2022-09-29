@@ -8,12 +8,14 @@ export const appRouter = t.router({
   getPokemonById: t.procedure
     .input(z.object({ id: z.number() }))
     .query(async ({ input }) => {
-      const pokeApiConnection = new PokemonClient();
-      const pokemon = await pokeApiConnection.getPokemonById(input.id);
-      return { name: pokemon.name, sprites: pokemon.sprites };
+      await prisma.$connect();
+      const pokemon = await prisma.pokemon.findFirst({ where: { id: input.id } });
+
+      if (!pokemon) throw new Error("Pokemon doens't exist");
+      return pokemon;
     }),
   castVote: t.procedure
-    .input(z.object({ votedFor: z.number(), votedAgainst: z.number() }))
+    .input(z.object({ votedForId: z.number(), votedAgainstId: z.number() }))
     .mutation(async ({ input }) => {
       await prisma.$connect();
       const voteInDb = await prisma.vote.create({
