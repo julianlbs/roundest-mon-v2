@@ -6,7 +6,7 @@ import Image from "next/image";
 import { useState } from "react";
 import type React from "react";
 
-const imgSize = 240;
+const imgSize = 256;
 
 const btn =
 	"inline-flex items-center px-2.5 py-2.5 border border-gray-300 shadow-sm text-xs font-medium rounded text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500";
@@ -30,7 +30,7 @@ export default function Home() {
 		setIds(getOptionsForVote());
 	};
 	return (
-		<div className="h-screen w-screen flex flex-col justify-center items-center">
+		<div className="h-screen w-screen flex flex-col justify-center items-center relative">
 			<div className="text-2xl">Whick Pokémon is rounder?</div>
 			<div className="p-2" />
 			<div className="p-8 flex flex-row justify-between items-center max-w-2xl border rounded">
@@ -49,6 +49,7 @@ export default function Home() {
 							/>
 						</>
 					)}
+				<div className="p-2" />
 			</div>
 		</div>
 	);
@@ -67,7 +68,9 @@ const PokemonListing: React.FC<{
 				alt="Pokemon Image"
 				width={imgSize}
 				height={imgSize}
+				layout="fixed"
 			/>
+			{/* <div className="mt-[-2rem]" /> */}
 			<div className="text-xl text-center capitalize">{props.pokemon.name}</div>
 			<button
 				className={`${btn} justify-self-end mt-2`}
