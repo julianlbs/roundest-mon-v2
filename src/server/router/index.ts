@@ -15,6 +15,7 @@ export const appRouter = t.router({
   castVote: t.procedure
     .input(z.object({ votedFor: z.number(), votedAgainst: z.number() }))
     .mutation(async ({ input }) => {
+      await prisma.$connect();
       const voteInDb = await prisma.vote.create({
         data: {
           ...input
