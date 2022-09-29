@@ -5,6 +5,7 @@ import { AppRouter } from "@/server/router";
 import Image from "next/image";
 import { useState } from "react";
 import type React from "react";
+import Link from "next/link";
 
 const imgSize = 256;
 
@@ -30,7 +31,7 @@ export default function Home() {
 		setIds(getOptionsForVote());
 	};
 	return (
-		<div className="h-screen w-screen flex flex-col justify-center items-center">
+		<div className="h-screen w-screen flex flex-col justify-center items-center relative">
 			<div className="text-2xl">Whick Pokémon is rounder?</div>
 			<div className="p-2" />
 			<div className="px-12 pt-12 pb-24 flex flex-row justify-between items-center border rounded">
@@ -50,7 +51,11 @@ export default function Home() {
 						</>
 					)}
 			</div>
-			{/* <div className="p-2" /> */}
+			<div className="p-2 absolute bottom-0 right-0 px-8 pb-8 text-xl">
+				<Link href="results">
+					<a>See Voting Results &rarr;</a>
+				</Link>
+			</div>
 		</div>
 	);
 }
