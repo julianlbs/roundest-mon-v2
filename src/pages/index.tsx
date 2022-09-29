@@ -20,7 +20,14 @@ export default function Home() {
 
 	if (firstPokemon.isLoading || secondPokemon.isLoading) return null;
 
+	const voteMutation = trpc.castVote.useMutation();
+
 	const voteForRoundest = (selected: number) => {
+		if (selected === first) {
+			voteMutation.mutate({ votedFor: first, votedAgainst: second });
+		} else {
+			voteMutation.mutate({ votedFor: second, votedAgainst: first });
+		}
 		// todo: fire mutation to persist changes
 
 		setIds(getOptionsForVote());
