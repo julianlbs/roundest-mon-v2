@@ -30,32 +30,41 @@ export default function Home() {
 
 		setIds(getOptionsForVote());
 	};
+
+	const dataLoaded =
+		!firstPokemon.isLoading &&
+		firstPokemon.data &&
+		!secondPokemon.isLoading &&
+		secondPokemon.data;
+
 	return (
 		<div className="h-screen w-screen flex flex-col justify-center items-center relative">
-			<div className="text-2xl">Whick Pokémon is rounder?</div>
-			<div className="p-2" />
-			<div className="px-12 pt-12 pb-24 flex flex-row justify-between items-center border rounded">
-				{!firstPokemon.isLoading &&
-					!secondPokemon.isLoading &&
-					secondPokemon.data && (
-						<>
-							<PokemonListing
-								pokemon={firstPokemon.data!}
-								vote={() => voteForRoundest(first)}
-							/>
-							<div className="p-2">Vs</div>
-							<PokemonListing
-								pokemon={secondPokemon.data!}
-								vote={() => voteForRoundest(second)}
-							/>
-						</>
-					)}
-			</div>
-			<div className="p-2 absolute bottom-0 right-0 px-8 pb-8 text-xl">
-				<Link href="results">
-					<a>See Voting Results &rarr;</a>
-				</Link>
-			</div>
+			{dataLoaded && (
+				<>
+					<div className="text-2xl">Whick Pokémon is rounder?</div>
+					<div className="p-2" />
+					<div className="px-12 pt-12 pb-24 flex flex-row justify-between items-center border rounded">
+						{
+							<>
+								<PokemonListing
+									pokemon={firstPokemon.data!}
+									vote={() => voteForRoundest(first)}
+								/>
+								<div className="p-2">Vs</div>
+								<PokemonListing
+									pokemon={secondPokemon.data!}
+									vote={() => voteForRoundest(second)}
+								/>
+							</>
+						}
+					</div>
+					<div className="p-2 absolute bottom-0 right-0 px-8 pb-8 text-xl">
+						<Link href="results">
+							<a>See Voting Results &rarr;</a>
+						</Link>
+					</div>
+				</>
+			)}
 		</div>
 	);
 }
@@ -74,7 +83,6 @@ const PokemonListing: React.FC<{
 					alt="Pokemon Image"
 					width={imgSize}
 					height={imgSize}
-					// layout="fixed"
 				/>
 			</div>
 			<div className="mt-[-2rem]" />
