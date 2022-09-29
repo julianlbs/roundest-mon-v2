@@ -17,9 +17,11 @@ const ResultsPage: React.FC<{ pokemon: PokemonQueryResult }> = (props) => {
 			<div className="flex flex-col items-center">
 				<h2 className="text-2xl pt-4 pb-2">Results</h2>
 				<div className="felx flex-col w-full max-w-2xl">
-					{props.pokemon.map((p, index) => (
-						<PokemonListing pokemon={p} key={index} />
-					))}
+					{props.pokemon
+						.sort((a, b) => generateCountPercent(b) - generateCountPercent(a))
+						.map((p, index) => (
+							<PokemonListing pokemon={p} key={index} />
+						))}
 				</div>
 			</div>
 		</div>
@@ -64,14 +66,14 @@ const PokemonListing: React.FC<{ pokemon: PokemonQueryResult[number] }> = (
 				/>
 				<div className="capitalize px-8">{props.pokemon.name}</div>
 			</div>
-			<div>{generateCountPercent(props.pokemon) + "%"}</div>
+			<div>{generateCountPercent(props.pokemon).toFixed(0) + "%"}</div>
 		</div>
 	);
 };
 
 const generateCountPercent = (pokemon: PokemonQueryResult[number]) => {
 	const { votesFor, votesAgainst } = pokemon._count;
-	return votesFor || votesAgainst
+	return votesFor + votesAgainst !== 0
 		? (votesFor / (votesFor + votesAgainst)) * 100
 		: 0;
 };
