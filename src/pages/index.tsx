@@ -18,8 +18,6 @@ export default function Home() {
 	const firstPokemon = trpc.getPokemonById.useQuery({ id: first });
 	const secondPokemon = trpc.getPokemonById.useQuery({ id: second });
 
-	if (firstPokemon.isLoading || secondPokemon.isLoading) return null;
-
 	const voteMutation = trpc.castVote.useMutation();
 
 	const voteForRoundest = (selected: number) => {
@@ -28,7 +26,6 @@ export default function Home() {
 		} else {
 			voteMutation.mutate({ votedFor: second, votedAgainst: first });
 		}
-		// todo: fire mutation to persist changes
 
 		setIds(getOptionsForVote());
 	};
