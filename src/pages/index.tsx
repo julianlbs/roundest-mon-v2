@@ -22,18 +22,18 @@ export default function Home() {
 
 	const voteForRoundest = (selected: number) => {
 		if (selected === first) {
-			voteMutation.mutate({ votedFor: first, votedAgainst: second });
+			voteMutation.mutate({ votedForId: first, votedAgainstId: second });
 		} else {
-			voteMutation.mutate({ votedFor: second, votedAgainst: first });
+			voteMutation.mutate({ votedForId: second, votedAgainstId: first });
 		}
 
 		setIds(getOptionsForVote());
 	};
 	return (
-		<div className="h-screen w-screen flex flex-col justify-center items-center relative">
+		<div className="h-screen w-screen flex flex-col justify-center items-center">
 			<div className="text-2xl">Whick Pokémon is rounder?</div>
 			<div className="p-2" />
-			<div className="p-8 flex flex-row justify-between items-center max-w-2xl border rounded">
+			<div className="px-12 pt-12 pb-24 flex flex-row justify-between items-center border rounded">
 				{!firstPokemon.isLoading &&
 					!secondPokemon.isLoading &&
 					secondPokemon.data && (
@@ -49,8 +49,8 @@ export default function Home() {
 							/>
 						</>
 					)}
-				<div className="p-2" />
 			</div>
+			{/* <div className="p-2" /> */}
 		</div>
 	);
 }
@@ -63,14 +63,16 @@ const PokemonListing: React.FC<{
 }> = (props) => {
 	return (
 		<div className="w-44 h-44 flex flex-col items-center">
-			<Image
-				src={props.pokemon.sprites.front_default!}
-				alt="Pokemon Image"
-				width={imgSize}
-				height={imgSize}
-				layout="fixed"
-			/>
-			{/* <div className="mt-[-2rem]" /> */}
+			<div>
+				<Image
+					src={props.pokemon.spriteUrl}
+					alt="Pokemon Image"
+					width={imgSize}
+					height={imgSize}
+					// layout="fixed"
+				/>
+			</div>
+			<div className="mt-[-2rem]" />
 			<div className="text-xl text-center capitalize">{props.pokemon.name}</div>
 			<button
 				className={`${btn} justify-self-end mt-2`}
