@@ -7,6 +7,8 @@ import { useState } from "react";
 import type React from "react";
 import Link from "next/link";
 
+import LoaderSvg from "../../public/rings.svg";
+
 const imgSize = 256;
 
 const btn =
@@ -64,6 +66,9 @@ export default function Home() {
 						</Link>
 					</div>
 				</>
+			)}
+			{!dataLoaded && (
+				<Image src={LoaderSvg} height={300} width={300} alt="Loading..." />
 			)}
 		</div>
 	);
